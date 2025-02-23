@@ -17,7 +17,7 @@ The node-red-netflow node processes NetFlow packets (commonly version 9) by conv
 To install this node, either use the Node palette or run the following command in your Node-RED user directory:
 
 ```bash
-    npm install node-red-netflow
+    npm install @cappern/node-red-netflow
 ```
 
 After installation, restart Node-RED to load the new node.
@@ -86,7 +86,6 @@ Here is an example of what the decoded object might look like:
       "last_switched": 1347793632,
       "fsId": 5206
     }
-    // ... additional flow records ...
   ]
 }
 
