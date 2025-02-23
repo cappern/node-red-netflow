@@ -13,8 +13,9 @@
   "author": "Christoffer Cappelen",
   "license": "MIT",
   "node-red": {
-    "nodes": {
-      "netflow": "nodes/netflow.js"
+        "version": ">=2.0.0",
+        "nodes": {
+            "netflow": "nodes/netflow.js"
     }
   },
   "dependencies": {
