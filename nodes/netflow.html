@@ -1,0 +1,104 @@
+<script type="text/javascript">
+    RED.nodes.registerType('netflow', {
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: { value: "" }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "font-awesome/fa-signal",
+        label: function() {
+            return this.name || "netflow";
+        }
+    });
+</script>
+
+<script type="text/html" data-help-name="netflow">
+    <p>This node decodes NetFlow data received as a Buffer from a UDP-in node using the <code>node-netflowv9</code> library. The decoded output is a JavaScript object that includes a <code>header</code> and a <code>flows</code> array.</p>
+  
+    <h3>Decoded Object Structure</h3>
+    <p>The output object contains the following properties:</p>
+    <dl class="message-properties">
+      <dt>header <span class="property-type">object</span></dt>
+      <dd>
+        An object containing metadata about the NetFlow packet:
+        <ul>
+          <li><code>version</code>: NetFlow version (e.g., 9)</li>
+          <li><code>count</code>: Number of flow records included in the packet</li>
+          <li><code>uptime</code>: Uptime of the exporting device</li>
+          <li><code>seconds</code>: UNIX timestamp (seconds since 1970) when the packet was sent</li>
+          <li><code>sequence</code>: Sequence number of the packet</li>
+          <li><code>sourceId</code>: Source identifier (typically set by the exporting device)</li>
+        </ul>
+      </dd>
+      <dt>flows <span class="property-type">array</span></dt>
+      <dd>
+        An array of decoded flow records. Each flow record is an object with properties such as:
+        <ul>
+          <li><code>ipv4_src_addr</code>: Source IPv4 address</li>
+          <li><code>ipv4_dst_addr</code>: Destination IPv4 address</li>
+          <li><code>l4_src_port</code>: Layer 4 source port</li>
+          <li><code>l4_dst_port</code>: Layer 4 destination port</li>
+          <li><code>in_bytes</code>: Number of bytes transferred</li>
+          <li><code>in_pkts</code>: Number of packets transferred</li>
+          <li><code>protocol</code>: IP protocol (e.g., 6 for TCP, 17 for UDP)</li>
+          <li><code>input_snmp</code> and <code>output_snmp</code>: SNMP interface indices</li>
+          <li><code>first_switched</code>: Timestamp when the flow started</li>
+          <li><code>last_switched</code>: Timestamp when the flow ended</li>
+          <li><code>fsId</code>: FlowSet ID</li>
+        </ul>
+      </dd>
+    </dl>
+  
+    <h3>Usage</h3>
+    <p>
+      To use this node, connect the output of a UDP-in node (configured to output binary data as a Buffer) to this node. The node decodes the NetFlow packet and outputs a structured object containing header information and an array of flow records.
+    </p>
+  
+    <h3>Example Output</h3>
+    <p>The decoded object might look like this:</p>
+    <pre>
+  {
+    "header": {
+      "version": 9,
+      "count": 28,
+      "uptime": 1348093000,
+      "seconds": 1740245416,
+      "sequence": 2875,
+      "sourceId": 0
+    },
+    "flows": [
+      {
+        "ipv4_src_addr": "192.168.1.2",
+        "ipv4_dst_addr": "192.168.99.12",
+        "l4_src_port": 46532,
+        "l4_dst_port": 6053,
+        "in_bytes": 200,
+        "in_pkts": 5,
+        "protocol": 6,
+        "input_snmp": 10,
+        "output_snmp": 10,
+        "first_switched": 1347790812,
+        "last_switched": 1347793632,
+        "fsId": 5206
+      },
+      // ... additional flow records ...
+    ]
+  }
+    </pre>
+  
+    <h3>References</h3>
+    <ul>
+      <li>
+        <a href="https://www.cisco.com/c/en/us/products/ios-nx-os-software/ios-netflow/index.html" target="_blank">
+        Cisco NetFlow Documentation</a>
+      </li>
+      <li>
+        <a href="https://github.com/davidguttman/node-netflowv9" target="_blank">
+        node-netflowv9 GitHub Repository</a>
+      </li>
+    </ul>
+  </script>
+  
+  

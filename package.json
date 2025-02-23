@@ -1,0 +1,23 @@
+{
+  "name": "@cappern/node-red-netflow",
+  "version": "0.0.1",
+  "description": "Node-RED node that decodes NetFlow data using node-netflowv9",
+  "main": "nodes/netflow.js",
+  "keywords": [
+    "node-red",
+    "netflow",
+    "node-netflowv9",
+    "udp",
+    "network"
+  ],
+  "author": "Christoffer Cappelen",
+  "license": "MIT",
+  "node-red": {
+    "nodes": {
+      "netflow": "nodes/netflow.js"
+    }
+  },
+  "dependencies": {
+    "node-netflowv9": "^0.2.16"
+  }
+}
